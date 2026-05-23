@@ -1,0 +1,449 @@
+import React, { useState } from "react";
+
+const BRAND = {
+  name: "SimonFX",
+  founder: "Saimon Polanco",
+  method: "Método Ciclo Diario",
+  price: "$47",
+  whatsapp: "0000000000",
+};
+
+const urgency = {
+  message: "Cupos limitados",
+};
+
+const problems = [
+  ["Operas por emoción", "Entras porque el precio se mueve, no porque tu plan esté confirmado."],
+  ["Cambias de estrategia", "Saltas de método en método sin dominar una estructura real."],
+  ["No tienes reglas claras", "No sabes exactamente cuándo entrar, cuándo esperar y cuándo no operar."],
+  ["No documentas tus trades", "Sin journal, repites errores sin darte cuenta y no puedes medir progreso."],
+  ["Buscas señales", "Dependes de otros en vez de desarrollar criterio y ejecución propia."],
+];
+
+const methodSteps = [
+  ["01", "Contexto diario", "Identificas el comportamiento general del día antes de buscar entradas."],
+  ["02", "Zona de decisión", "Esperas que el precio llegue a zonas donde realmente vale la pena actuar."],
+  ["03", "Confirmación mecánica", "La entrada debe cumplir condiciones claras; si no cumple, no se opera."],
+  ["04", "Gestión de riesgo", "Defines riesgo, invalidación y objetivo antes de ejecutar."],
+  ["05", "Ejecución", "Operas el plan, no la emoción del momento."],
+  ["06", "Registro en journal", "Documentas resultado, emoción, error y aprendizaje para mejorar."],
+];
+
+const learnItems = [
+  "Cómo leer el Ciclo Diario sin llenar el gráfico de indicadores.",
+  "Cómo preparar escenarios antes de la sesión.",
+  "Cómo validar una entrada mecánica en EURUSD.",
+  "Cómo adaptar la lectura a XAUUSD, GBPUSD e índices sin cambiar la esencia del método.",
+  "Cómo definir riesgo, stop e invalidación antes de entrar.",
+  "Cómo evitar sobreoperar después de una pérdida.",
+  "Cómo usar un journal para detectar tus errores repetidos.",
+  "Cómo construir criterio sin depender de señales.",
+];
+
+const benefits = [
+  ["Acceso inmediato", "Empieza a estudiar la estrategia apenas confirmes tu acceso."],
+  ["Pago único", "El acceso al Método Ciclo Diario tiene un valor único de $47 dólares."],
+  ["Enfoque práctico", "Menos teoría vacía y más estructura aplicable al mercado real."],
+  ["Journal incluido", "Registra operaciones, emociones, cumplimiento del plan y resultados."],
+  ["Canal de proyecciones", "Acceso a mis escenarios esperados del mercado con enfoque educativo. No son señales."],
+  ["Bonos de alto valor", "Incluye estrategia de NASDAQ, tips de backtesting y participación en sorteos de cuentas de fondeo."],
+];
+
+const bonuses = [
+  [
+    "Bono 1",
+    "Estrategia mecánica NASDAQ",
+    "Recibes como regalo una estrategia adicional para NASDAQ, con su gestión de riesgo y ejemplos de trades diarios para estudiar ejecución con estructura.",
+  ],
+  [
+    "Bono 2",
+    "Tips de backtesting ilimitado",
+    "Te comparto recursos y tips para que puedas practicar más, probar escenarios y acelerar tu curva de aprendizaje con más datos.",
+  ],
+  [
+    "Bono 3",
+    "Canal de proyecciones SimonFX",
+    "Acceso a un canal donde comparto lo que espero del mercado. Importante: son proyecciones educativas, no señales ni instrucciones de entrada.",
+  ],
+  [
+    "Bono 4",
+    "Sorteo de cuentas de fondeo",
+    "Entre miembros activos realizo sorteos de cuentas de fondeo como beneficio de comunidad. No es promesa de aprobación ni de resultados.",
+  ],
+];
+
+const faqs = [
+  ["¿Esto son señales?", "No. No compras señales. Aprendes una estructura mecánica para operar con criterio propio."],
+  ["¿Cuál es el mercado principal?", "El enfoque principal es EURUSD. También puedes estudiar la lógica en XAUUSD, GBPUSD e índices, pero la base se trabaja primero en un solo mercado para evitar dispersión."],
+  ["¿Cuánto cuesta?", "El valor actual del acceso al Método Ciclo Diario es de $47 dólares en pago único."],
+  ["¿Qué incluye el acceso?", "Incluye el método, reglas de ejecución, gestión de riesgo, journal, canal de proyecciones educativas y bonos adicionales."],
+  ["¿Qué es el canal de proyecciones?", "Es un canal donde comparto escenarios y expectativas del mercado desde un enfoque educativo. No son señales ni instrucciones directas de entrada."],
+  ["¿Qué pasa con el sorteo de cuentas de fondeo?", "Entre los miembros activos se realizan sorteos de cuentas de fondeo como beneficio adicional de comunidad. Esto no forma parte de una promesa de resultados."],
+  ["¿Garantiza ganancias?", "No. El trading implica riesgo. La estrategia entrega estructura y proceso, pero los resultados dependen de tu ejecución, gestión y disciplina."],
+  ["¿Incluye journal?", "Sí. La idea es que registres tus operaciones y puedas medir si realmente estás siguiendo el método."],
+];
+
+function wa(text) {
+  return `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+
+function Button({ children, href, secondary = false, className = "" }) {
+  return (
+    <a
+      href={href || wa("Hola Saimon, quiero acceder al Método Ciclo Diario de $47")}
+      className={`inline-flex items-center justify-center border px-7 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition ${
+        secondary
+          ? "border-[#31475d] bg-transparent text-[#d8e7f7] hover:border-[#7fa8c9] hover:text-white"
+          : "border-[#d8e7f7] bg-[#d8e7f7] text-[#07111b] hover:bg-transparent hover:text-[#d8e7f7]"
+      } ${className}`}
+    >
+      {children}
+    </a>
+  );
+}
+
+function Label({ children }) {
+  return <p className="mb-4 text-xs font-black uppercase tracking-[0.42em] text-[#7fa8c9]">{children}</p>;
+}
+
+function Logo() {
+  return (
+    <a href="#inicio" className="flex items-center gap-3">
+      <div className="relative grid h-11 w-11 place-items-center border border-[#d8e7f7]/30 bg-[#0d1d2c] shadow-[0_0_28px_rgba(127,168,201,.18)]">
+        <span className="text-lg font-black text-[#d8e7f7]">SF</span>
+        <span className="absolute -right-1 -top-1 text-[#7fa8c9]">↗</span>
+      </div>
+      <div>
+        <p className="text-sm font-black uppercase tracking-[0.32em] text-white">Simon<span className="text-[#7fa8c9]">FX</span></p>
+        <p className="text-[9px] uppercase tracking-[0.28em] text-[#7fa8c9]/70">Ciclo Diario</p>
+      </div>
+    </a>
+  );
+}
+
+function HeroMockup() {
+  return (
+    <div className="relative mx-auto max-w-xl">
+      <div className="absolute -inset-8 rounded-full bg-[#7fa8c9]/10 blur-3xl" />
+      <div className="relative border border-[#31475d] bg-[#07111b]/90 p-5 shadow-2xl shadow-black/60">
+        <div className="mb-5 flex items-center justify-between border-b border-[#31475d] pb-4">
+          <div className="flex gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#7fa8c9]" />
+            <span className="h-2 w-2 rounded-full bg-white/20" />
+            <span className="h-2 w-2 rounded-full bg-white/20" />
+          </div>
+          <p className="text-[10px] uppercase tracking-[0.30em] text-[#7fa8c9]">SimonFX Journal</p>
+        </div>
+
+        <div className="grid grid-cols-4 gap-3">
+          {[["68%", "Plan"], ["2.3R", "Media"], ["EURUSD", "Foco"], ["$47", "Acceso"]].map(([value, title]) => (
+            <div key={title} className="border border-[#31475d] bg-[#0d1d2c] p-3 text-center">
+              <p className="text-xl font-black text-white">{value}</p>
+              <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-[#7fa8c9]/70">{title}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 h-44 border border-[#31475d] bg-[#050b12] p-5">
+          <div className="relative h-full overflow-hidden">
+            <svg viewBox="0 0 520 180" className="h-full w-full">
+              <defs>
+                <linearGradient id="lineGlow" x1="0" x2="1">
+                  <stop offset="0%" stopColor="#7fa8c9" />
+                  <stop offset="100%" stopColor="#d8e7f7" />
+                </linearGradient>
+              </defs>
+              {[30, 70, 110, 150].map((y) => <line key={y} x1="0" y1={y} x2="520" y2={y} stroke="rgba(255,255,255,.07)" />)}
+              {[60, 140, 220, 300, 380, 460].map((x) => <line key={x} x1={x} y1="0" x2={x} y2="180" stroke="rgba(255,255,255,.05)" />)}
+              <path d="M0 130 C45 122,55 90,95 96 C130 101,135 60,180 70 C225 80,215 138,270 120 C320 104,305 58,360 62 C420 66,425 28,520 34" fill="none" stroke="url(#lineGlow)" strokeWidth="4" />
+              <circle cx="360" cy="62" r="6" fill="#d8e7f7" />
+              <circle cx="520" cy="34" r="6" fill="#7fa8c9" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="mt-5 grid grid-cols-3 gap-3 text-xs">
+          <div className="border border-[#31475d] bg-[#0d1d2c] p-3 text-[#a9b7c4]">Contexto</div>
+          <div className="border border-[#31475d] bg-[#0d1d2c] p-3 text-[#a9b7c4]">Confirmación</div>
+          <div className="border border-[#31475d] bg-[#0d1d2c] p-3 text-[#a9b7c4]">Ejecución</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UrgencyBlock({ compact = false }) {
+  if (compact) {
+    return (
+      <div className="mt-8 border border-[#7fa8c9]/35 bg-[#07111b]/80 p-5">
+        <p className="text-xs font-black uppercase tracking-[0.28em] text-[#7fa8c9]">Cupos limitados</p>
+        <p className="mt-2 text-sm leading-7 text-[#a9b7c4]">
+          Esta apertura tiene acceso limitado para mantener la calidad del seguimiento y la comunidad.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-5xl">
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="border border-[#31475d] bg-[#050b12] p-8">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-[#7fa8c9]">Cupos limitados</p>
+          <h3 className="mt-4 text-3xl font-black uppercase text-white">Apertura con acceso limitado</h3>
+          <p className="mt-5 text-base leading-8 text-[#a9b7c4]">
+            Para mantener la calidad del contenido, el seguimiento y la comunidad, el acceso al Método Ciclo Diario estará disponible por cupos limitados.
+          </p>
+        </div>
+
+        <div className="border border-[#31475d] bg-[#07111b] p-8">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-[#7fa8c9]">Oferta activa</p>
+          <h3 className="mt-4 text-5xl font-black uppercase leading-[0.95] text-white">
+            Acceso actual<br />
+            <span className="text-[#7fa8c9]">USD 47</span>
+          </h3>
+          <p className="mt-5 text-base leading-8 text-[#a9b7c4]">
+            La oferta de lanzamiento está disponible para los nuevos miembros mientras la apertura siga activa.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [openFaq, setOpenFaq] = useState(0);
+  const whatsappLink = wa("Hola Saimon, quiero comprar el Método Ciclo Diario por $47");
+
+  return (
+    <div className="min-h-screen bg-[#03070b] text-white selection:bg-[#7fa8c9] selection:text-[#03070b]">
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,rgba(42,74,103,.40),transparent_34%),linear-gradient(180deg,rgba(4,13,23,.35),rgba(0,0,0,.96))]" />
+
+      <header className="fixed left-0 top-0 z-50 w-full border-b border-[#31475d]/60 bg-[#03070b]/90 backdrop-blur-xl">
+        <div className="border-b border-[#31475d]/60 bg-[#07111b] px-5 py-2 text-center text-[11px] font-black uppercase tracking-[0.22em] text-[#d8e7f7]">
+          Cupos limitados · Acceso al Método Ciclo Diario por USD 47
+        </div>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+          <Logo />
+          <nav className="hidden items-center gap-8 text-xs font-bold uppercase tracking-[0.22em] text-[#d8e7f7]/55 lg:flex">
+            <a href="#metodo" className="hover:text-white">El método</a>
+            <a href="#para-ti" className="hover:text-white">Para quién</a>
+            <a href="#journal" className="hover:text-white">Journal</a>
+            <a href="#oferta" className="hover:text-white">Precio</a>
+            <a href="#faq" className="hover:text-white">FAQ</a>
+            <a href={whatsappLink} className="border border-[#d8e7f7] bg-[#d8e7f7] px-5 py-3 text-[#07111b] hover:bg-transparent hover:text-[#d8e7f7]">Reservar lugar →</a>
+          </nav>
+          <a href={whatsappLink} className="border border-[#d8e7f7] px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-[#d8e7f7] lg:hidden">Entrar</a>
+        </div>
+      </header>
+
+      <main className="relative">
+        <section id="inicio" className="grid min-h-screen place-items-center px-5 pt-36">
+          <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.03fr_.97fr]">
+            <div>
+              <div className="mb-8 inline-flex border border-[#7fa8c9]/35 bg-[#0d1d2c]/80 px-5 py-3 text-xs font-black uppercase tracking-[0.35em] text-[#7fa8c9]">Estrategia mecánica · Acceso por $47</div>
+              <h1 className="text-6xl font-black uppercase leading-[0.88] tracking-[-0.06em] text-white md:text-8xl lg:text-9xl">
+                Aprende a operar<br />con reglas.<br /><span className="text-[#7fa8c9]">Desde cero.</span>
+              </h1>
+              <p className="mt-8 max-w-3xl text-base leading-8 text-[#a9b7c4] md:text-lg">
+                Soy <strong className="text-white">Saimon Polanco</strong>, trader con <strong className="text-white">4 años de experiencia</strong>. Creé el <strong className="text-white">Método Ciclo Diario</strong> para ayudar a traders que están cansados de improvisar, entrar por impulso y depender de señales.
+              </p>
+              <p className="mt-5 max-w-2xl text-sm leading-7 text-[#7fa8c9]">Enfoque principal: EURUSD. También puedes estudiar la lógica en XAUUSD, GBPUSD e índices.</p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Button href="#oferta">Quiero entrar por $47 →</Button>
+                <Button href="#beneficios" secondary>Ver beneficios</Button>
+              </div>
+              <UrgencyBlock compact />
+            </div>
+            <HeroMockup />
+          </div>
+        </section>
+
+        <section className="border-y border-[#31475d]/60 bg-[#07111b]/85">
+          <div className="mx-auto grid max-w-7xl divide-y divide-[#31475d]/60 md:grid-cols-4 md:divide-x md:divide-y-0">
+            {[["4+", "años de experiencia"], ["$47", "pago único"], ["1", "método mecánico"], ["0", "señales vendidas"]].map(([value, label]) => (
+              <div key={label} className="px-6 py-8 text-center md:text-left">
+                <p className="text-4xl font-black uppercase text-white md:text-5xl">{value}</p>
+                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-[#7fa8c9]/70">{label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="para-ti" className="border-y border-[#31475d]/60 bg-[#f5f7f9] px-5 py-24 text-[#121820] lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-7xl">
+            <div className="text-center">
+              <p className="mb-4 text-xs font-black uppercase tracking-[0.38em] text-[#1b5376]">Este método es para ti si...</p>
+              <h2 className="text-4xl font-black uppercase tracking-[-0.04em] md:text-6xl">Quieres dejar de operar a ciegas</h2>
+              <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-600">Si te identificas con alguno de estos puntos, necesitas estructura antes que más indicadores.</p>
+            </div>
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {problems.slice(0, 3).map(([title, text], index) => (
+                <div key={title} className="rounded-[28px] border border-slate-300 bg-white p-8 text-center shadow-xl shadow-slate-200/70">
+                  <p className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-[#e7eef5] text-2xl">{['⚡', '♻', '📉'][index]}</p>
+                  <h3 className="text-xl font-black uppercase tracking-[0.08em]">{title}</h3>
+                  <p className="mt-4 leading-7 text-slate-600">{text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mx-auto mt-8 grid max-w-4xl gap-6 md:grid-cols-2">
+              {problems.slice(3).map(([title, text], index) => (
+                <div key={title} className="rounded-[28px] border border-slate-300 bg-white p-8 text-center shadow-xl shadow-slate-200/70">
+                  <p className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-[#e7eef5] text-2xl">{['🧠', '🔒'][index]}</p>
+                  <h3 className="text-xl font-black uppercase tracking-[0.08em]">{title}</h3>
+                  <p className="mt-4 leading-7 text-slate-600">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="metodo" className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-32">
+          <div className="max-w-3xl">
+            <Label>Qué vas a aprender</Label>
+            <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">El proceso completo del Ciclo Diario.</h2>
+            <p className="mt-8 text-base leading-8 text-[#a9b7c4]">Una ruta clara para analizar, esperar, validar, ejecutar y documentar. Menos ruido. Más estructura.</p>
+          </div>
+          <div className="mt-14 grid border border-[#31475d]/70 md:grid-cols-2 lg:grid-cols-3">
+            {methodSteps.map(([num, title, text]) => (
+              <div key={num} className="border-b border-[#31475d]/70 bg-[#07111b]/60 p-8 md:border-r lg:last:border-r-0">
+                <p className="text-6xl font-black leading-none text-transparent" style={{ WebkitTextStroke: "1px #7fa8c9" }}>{num}</p>
+                <h3 className="mt-8 text-xl font-black text-white">{title}</h3>
+                <p className="mt-4 text-sm leading-7 text-[#a9b7c4]">{text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="beneficios" className="border-y border-[#31475d]/60 bg-[#f5f7f9] px-5 py-24 text-[#121820] lg:px-8 lg:py-32">
+          <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-2">
+            <div>
+              <p className="mb-4 text-xs font-black uppercase tracking-[0.38em] text-[#1b5376]">Contenido</p>
+              <h2 className="text-4xl font-black uppercase tracking-[-0.04em] md:text-6xl">Qué vas a dominar</h2>
+              <div className="mt-10 space-y-5">
+                {learnItems.map((item) => (
+                  <div key={item} className="flex gap-4 text-lg leading-8">
+                    <span className="text-[#1b5376]">◆</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-4 text-xs font-black uppercase tracking-[0.38em] text-[#1b5376]">Beneficios</p>
+              <h2 className="text-4xl font-black uppercase tracking-[-0.04em] md:text-6xl">Lo que recibes</h2>
+              <div className="mt-10 space-y-6">
+                {benefits.map(([title, text]) => (
+                  <div key={title} className="rounded-2xl border border-slate-300 bg-white p-6 shadow-lg shadow-slate-200/60">
+                    <h3 className="font-black uppercase tracking-[0.08em]">{title}</h3>
+                    <p className="mt-3 leading-7 text-slate-600">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="journal" className="mx-auto grid max-w-7xl gap-14 px-5 py-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-8 lg:py-32">
+          <div>
+            <Label>Herramienta incluida</Label>
+            <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">Journal para medir<br /><span className="text-[#7fa8c9]">tu disciplina.</span></h2>
+            <p className="mt-8 text-base leading-8 text-[#a9b7c4]">No basta con operar. Debes saber si estás cumpliendo el método. El journal te ayuda a revisar entradas, emociones, errores y evolución.</p>
+            <div className="mt-10 space-y-5">
+              {['Dashboard de rendimiento', 'Historial completo de trades', 'Control de emociones', 'Revisión del cumplimiento del plan'].map((item) => (
+                <div key={item} className="flex items-center gap-4 border border-[#31475d]/70 bg-[#07111b]/70 p-4">
+                  <span className="grid h-9 w-9 place-items-center border border-[#7fa8c9]/60 text-[#7fa8c9]">+</span>
+                  <p className="font-bold text-white">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <HeroMockup />
+        </section>
+
+        <section className="border-y border-[#31475d]/60 bg-[#07111b] px-5 py-24 text-center lg:px-8">
+          <UrgencyBlock />
+          <div className="mx-auto mt-16 max-w-4xl">
+            <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">Acceso completo<br /><span className="text-[#7fa8c9]">por $47</span></h2>
+          </div>
+        </section>
+
+        <section id="oferta" className="bg-[#f5f7f9] px-5 py-24 text-[#121820] lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-5xl text-center">
+            <p className="mb-4 text-xs font-black uppercase tracking-[0.38em] text-[#1b5376]">Oferta de lanzamiento</p>
+            <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">Método Ciclo Diario</h2>
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600">Aprende una estructura mecánica para operar con criterio, gestionar mejor tu riesgo y dejar de depender de señales o impulsos.</p>
+
+            <div className="mx-auto mt-12 max-w-xl rounded-[34px] border border-slate-300 bg-white p-8 shadow-2xl shadow-slate-300/60">
+              <p className="text-sm font-black uppercase tracking-[0.30em] text-[#1b5376]">Pago único</p>
+              <p className="mt-4 text-2xl font-black text-slate-400 line-through">USD 97.00</p>
+              <p className="mt-1 text-8xl font-black text-[#07111b]">USD 47</p>
+              <p className="mt-5 text-lg text-slate-600">Acceso a la estrategia mecánica, guía de aplicación, journal y bonos incluidos.</p>
+              <div className="mt-8 space-y-0 border-y border-slate-200 text-left">
+                {['Método Ciclo Diario paso a paso', 'Reglas de entrada y confirmación', 'Gestión de riesgo estructurada', 'Enfoque principal en EURUSD', 'Adaptación a XAUUSD, GBPUSD e índices', 'Journal de trading incluido', 'Canal de proyecciones educativas', 'Bonos especiales incluidos'].map((item) => (
+                  <div key={item} className="border-b border-slate-200 py-4 text-sm font-semibold last:border-b-0"><span className="text-[#1b5376]">—</span> {item}</div>
+                ))}
+              </div>
+              <a href={whatsappLink} className="mt-8 inline-flex w-full items-center justify-center bg-[#07111b] px-8 py-5 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:bg-[#1b5376]">Quiero entrar ahora →</a>
+              <p className="mt-4 text-xs text-slate-500">El pago y acceso se coordinan directamente por WhatsApp.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-[#31475d]/60 bg-[#07111b] px-5 py-24 lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-6xl">
+            <div className="text-center">
+              <Label>Bonos incluidos</Label>
+              <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">Si entras hoy recibes</h2>
+              <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#a9b7c4]">Además del Método Ciclo Diario, obtienes recursos y beneficios pensados para aumentar el valor de tu acceso y ayudarte a avanzar más rápido.</p>
+            </div>
+            <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              {bonuses.map(([num, title, text]) => (
+                <div key={title} className="border border-[#31475d] bg-[#050b12] p-8">
+                  <p className="text-xs font-black uppercase tracking-[0.30em] text-[#7fa8c9]">{num}</p>
+                  <h3 className="mt-5 text-2xl font-black uppercase text-white">{title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-[#a9b7c4]">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="mx-auto max-w-6xl px-5 py-24 lg:px-8 lg:py-32">
+          <Label>Preguntas frecuentes</Label>
+          <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">Antes de entrar</h2>
+          <div className="mt-12 grid border border-[#31475d]/70 md:grid-cols-2">
+            {faqs.map(([q, a], index) => (
+              <button key={q} onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="border-b border-r border-[#31475d]/70 bg-[#07111b]/50 p-6 text-left last:border-b-0 md:last:border-b md:[&:nth-child(even)]:border-r-0">
+                <div className="flex items-center justify-between gap-6">
+                  <h3 className="font-black text-white">{q}</h3>
+                  <span className="text-[#7fa8c9]">{openFaq === index ? '−' : '+'}</span>
+                </div>
+                {openFaq === index && <p className="mt-5 text-sm leading-7 text-[#a9b7c4]">{a}</p>}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-[#31475d]/60 bg-[#050b12] px-5 py-24 text-center lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-7xl">¿Listo para operar<br /><span className="text-[#7fa8c9]">con proceso?</span></h2>
+            <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-[#a9b7c4]">Entra al Método Ciclo Diario por $47 y empieza a estudiar una estructura mecánica enfocada en EURUSD.</p>
+            <div className="mt-10 flex justify-center">
+              <Button href={whatsappLink}>Hablar con Saimon →</Button>
+            </div>
+            <p className="mt-8 text-xs uppercase tracking-[0.22em] text-[#7fa8c9]/60">No es asesoría financiera · No son señales · El trading implica riesgo</p>
+          </div>
+        </section>
+      </main>
+
+      <footer className="relative border-t border-[#31475d]/60 px-5 py-8 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-xs uppercase tracking-[0.22em] text-[#7fa8c9]/60 md:flex-row md:items-center md:justify-between">
+          <p>© 2026 SimonFX · Saimon Polanco</p>
+          <p>Método Ciclo Diario · Educación trading</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
