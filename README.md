@@ -15,7 +15,7 @@ Cámbialo por tu número con código de país y sin `+`, sin espacios.
 Ejemplo:
 
 ```js
-const WHATSAPP_NUMBER = "573001234567";
+const WHATSAPP_NUMBER = "593981225003";
 ```
 
 ## Poner pasarela de pago directa
