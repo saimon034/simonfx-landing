@@ -7,7 +7,7 @@ Sitio web estático listo para publicar gratis en GitHub + Netlify.
 Abre `index.html` y busca:
 
 ```js
-const WHATSAPP_NUMBER = "0000000000";
+const WHATSAPP_NUMBER = "593981225003";
 ```
 
 Cámbialo por tu número con código de país y sin `+`, sin espacios.
