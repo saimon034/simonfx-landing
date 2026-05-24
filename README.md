@@ -1,35 +1,17 @@
-# SimonFX Landing
+# SimonFX Landing - actualizado
 
-Sitio web estático listo para publicar gratis en GitHub + Netlify.
+Cambios:
+- Sin cuadrito de iniciales en logo.
+- Sin métrica de señales vendidas.
+- Método mecánico sin número.
+- Canal de proyecciones gratis por 1 mes como bono.
 
-## Modificar WhatsApp
+## Cambiar WhatsApp
 
 Abre `index.html` y busca:
 
 ```js
-const WHATSAPP_NUMBER = "593981225003";
+const WHATSAPP_NUMBER = "0000000000";
 ```
 
-Cámbialo por tu número con código de país y sin `+`, sin espacios.
-
-Ejemplo:
-
-```js
-const WHATSAPP_NUMBER = "593981225003";
-```
-
-## Poner pasarela de pago directa
-
-Busca:
-
-```js
-const CHECKOUT_LINK = "";
-```
-
-Pega tu link de pago:
-
-```js
-const CHECKOUT_LINK = "https://tu-link-de-pago.com";
-```
-
-Si lo dejas vacío, los botones llevan a WhatsApp.
+Cámbialo por tu número con código de país, sin `+` y sin espacios.
